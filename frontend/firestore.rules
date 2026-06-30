@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users collection
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Tasks collection (root-level, queryable by userId)
+    match /tasks/{taskId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.resource.data.userId == request.auth.uid || resource.data.userId == request.auth.uid);
+    }
+    
+    // Activity logs
+    match /activity_logs/{logId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.resource.data.userId == request.auth.uid || resource.data.userId == request.auth.uid);
+    }
+    
+    // Notifications
+    match /notifications/{notifId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.resource.data.userId == request.auth.uid || resource.data.userId == request.auth.uid);
+    }
+    
+    // Calendar events
+    match /calendarEvents/{eventId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Settings
+    match /settings/{settingsId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Proposals collection
+    match /proposals/{proposalId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (request.resource.data.userId == request.auth.uid || resource.data.userId == request.auth.uid);
+    }
+  }
+}
+
