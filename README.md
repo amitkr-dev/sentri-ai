@@ -1,76 +1,277 @@
-# Sentri — Predict. Rescue. Finish.
+# 🚀 Sentri AI — Predict. Rescue. Finish.
 
-A world-class AI SaaS landing page built with React 18, Vite, Tailwind CSS, and Framer Motion.
+> **An AI Executive Assistant that predicts deadline risks before they become emergencies.**
 
-## Stack
+Built for **Google × Coding Ninjas Vibe2Ship 2026**  
+**Problem Statement:** AI Productivity Companion
 
-- **React 18** — component architecture
-- **Vite** — blazing-fast dev server & build
-- **Tailwind CSS v3** — utility-first styling
-- **Framer Motion** — cinematic scroll animations
-- **Lucide React** — clean icon set
+---
 
-## Getting started
+## 📖 Overview
+
+Traditional productivity apps are reactive—they remind users after it's already too late.
+
+**Sentri AI** takes a proactive approach by analyzing every task, predicting the probability of missing deadlines using **Google Gemini AI**, and generating personalized execution plans before work falls behind.
+
+Instead of just managing tasks, Sentri helps users **finish them on time.**
+
+---
+
+## ✨ Features
+
+### 🧠 AI Deadline Risk Prediction
+- Predicts the probability of missing a deadline.
+- Explains why a task is at risk.
+- Estimates effort and completion time.
+
+### 🚨 Rescue Mode
+- Generates an AI-powered recovery plan.
+- Breaks large tasks into actionable steps.
+- Reduces deadline risk through structured execution.
+
+### 📊 Dashboard
+- AI Morning Brief
+- Critical Attention Zone
+- Task Overview
+- Productivity Insights
+
+### 📅 Calendar Integration
+- View upcoming events.
+- AI-generated focus blocks.
+- Schedule recommendations.
+
+### 📈 Risk Analysis
+- Task-level risk breakdown.
+- AI explanations.
+- Estimated effort.
+- Suggested actions.
+
+### 🤖 AI Copilot
+- AI-powered productivity assistant.
+- Context-aware recommendations.
+- Smart execution suggestions.
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+- React
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Zustand
+
+## Backend
+- Node.js
+- Express.js
+
+## AI
+- Google Gemini API
+
+## Deployment
+- Vercel
+- Render
+
+---
+
+# 🏗 Architecture
+
+```text
+                User
+                  │
+                  ▼
+        React + Vite Frontend
+                  │
+                  ▼
+          Express Backend
+                  │
+                  ▼
+          Google Gemini API
+                  │
+                  ▼
+          AI Analysis Engine
+                  │
+                  ▼
+ Dashboard • Risk Analysis • Rescue Mode
+```
+
+---
+
+# ⚙ Workflow
+
+```text
+Create Task
+      │
+      ▼
+Gemini analyzes task
+      │
+      ▼
+Risk Prediction
+      │
+      ▼
+Execution Plan
+      │
+      ▼
+Dashboard Updates
+      │
+      ▼
+Rescue Mode
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+sentri-ai/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── backend/
+│   ├── src/
+│   ├── routes/
+│   ├── services/
+│   ├── controllers/
+│   └── package.json
+│
+└── README.md
+```
+
+---
+
+# 🚀 Getting Started
+
+## Clone Repository
 
 ```bash
-# Install dependencies
+git clone https://github.com/YOUR_USERNAME/sentri-ai.git
+
+cd sentri-ai
+```
+
+---
+
+## Frontend
+
+```bash
+cd frontend
+
 npm install
 
-# Start the dev server
 npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
 ```
 
-## Project structure
+---
 
-```
-sentri/
-├── index.html
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-└── src/
-    ├── main.jsx          # Entry point
-    ├── App.jsx           # Root — assembles all sections
-    ├── index.css         # Global styles + Tailwind + keyframes
-    ├── hooks/
-    │   ├── useScrollReveal.js   # IntersectionObserver reveal
-    │   └── useCounter.js        # Animated number counter
-    ├── components/
-    │   ├── Navbar.jsx           # Sticky nav with blur-on-scroll
-    │   ├── HeroDashboard.jsx    # Floating risk feed widget
-    │   └── Footer.jsx
-    └── sections/
-        ├── Hero.jsx             # Full-screen hero + particles + parallax
-        ├── Problem.jsx          # Before vs After flow cards
-        ├── AIThinking.jsx       # Sequential AI workflow steps
-        ├── RiskPrediction.jsx   # 91% risk circle + reasons
-        ├── RescueMode.jsx       # 91% → 18% transformation + plan
-        ├── Features.jsx         # Bento grid
-        ├── HowItWorks.jsx       # Horizontal timeline
-        ├── Metrics.jsx          # Animated counters
-        └── CTA.jsx              # Glowing final call to action
+## Backend
+
+```bash
+cd backend
+
+npm install
+
+npm start
 ```
 
-## Design tokens (tailwind.config.js)
+---
 
-| Token    | Value     | Use                  |
-|----------|-----------|----------------------|
-| `bg`     | `#09090B` | Page background      |
-| `card`   | `#18181B` | Card surfaces        |
-| `card2`  | `#1E1E24` | Nested surfaces      |
-| `primary`| `#6366F1` | Brand / CTA          |
-| `accent` | `#22C55E` | Success / safe       |
-| `danger` | `#EF4444` | Risk / high urgency  |
-| `warning`| `#F59E0B` | Medium risk          |
+# 🔑 Environment Variables
 
-## Animations
+## Frontend
 
-Every major section uses Framer Motion's `whileInView` with `viewport={{ once: true }}` for performance.
-Custom hooks (`useScrollReveal`, `useCounter`) power the metrics and staggered reveals.
-CSS keyframes handle the ambient `float`, `pulse`, and `glow-pulse` loops.
+```env
+VITE_BACKEND_URL=YOUR_BACKEND_URL
+```
+
+---
+
+## Backend
+
+```env
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+PORT=5000
+```
+
+---
+
+# 🌍 Deployment
+
+## Frontend
+
+Hosted on **Vercel**
+
+🔗 https://YOUR_VERCEL_URL
+
+---
+
+## Backend
+
+Hosted on **Render**
+
+🔗 https://YOUR_RENDER_URL
+
+---
+
+# 💡 Why Sentri AI?
+
+Unlike traditional productivity tools such as Todoist, Notion, or Google Tasks, Sentri AI doesn't just organize work—it predicts potential deadline failures and proactively helps users recover before it's too late.
+
+---
+
+# 🔮 Future Scope
+
+- Google Calendar Automation
+- AI Morning Brief
+- Ghost Draft Generation
+- Productivity Analytics
+- Team Collaboration
+- Mobile Application
+- Chrome Extension
+
+---
+
+# 📷 Screenshots
+
+
+
+- Landing Page
+- Dashboard
+- Task Creation
+- Risk Analysis
+- Rescue Mode
+
+---
+
+# 🎥 Demo
+
+**Live Demo**
+
+https://YOUR_VERCEL_URL
+
+**Backend API**
+
+https://YOUR_RENDER_URL
+
+---
+
+# 📂 Repository
+
+https://github.com/YOUR_USERNAME/sentri-ai
+
+---
+
+# 👨‍💻 Team
+
+**Amit Kumar**
+
+MNIT Jaipur
+
+---
+
+# 📄 License
+
+This project was developed for **Google × Coding Ninjas Vibe2Ship 2026** as a hackathon submission.
