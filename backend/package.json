@@ -5,6 +5,7 @@
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "node src/index.js",
+    "build": "echo 'No build step required for backend'",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
