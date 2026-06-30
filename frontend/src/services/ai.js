@@ -49,8 +49,7 @@ Instructions:
 User Message: "${query}"`;
 
   try {
-    // 1. Try Firebase Cloud Functions Backend first
-    const backendUrl = "http://localhost:5001/sentri-ai/us-central1/api/copilot/chat";
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:5001/sentri-ai/us-central1/api/copilot/chat";
     const res = await fetch(backendUrl, {
       method: "POST",
       headers: {

@@ -2,7 +2,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const express = require("express");
 const cors = require("cors");
-const { initializeDefaultData } = require("./config/firestore");
+const { initializeDefaultData, db } = require("./config/firestore");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Initialize Firebase Admin SDK
@@ -142,7 +142,7 @@ You MUST respond with a single, valid JSON object matching this structure and no
           deadline: taskData.deadline,
           newRisk: Math.round(analysis.risk * 0.25)
         };
-        await admin.firestore().collection("proposals").doc(proposalId).set(proposalDoc);
+        await db.collection("proposals").doc(proposalId).set(proposalDoc);
       }
 
       await snapshot.ref.update(updates);
@@ -153,3 +153,11 @@ You MUST respond with a single, valid JSON object matching this structure and no
       return null;
     }
   });
+
+// Start standalone server if run directly (e.g. on Render)
+if (require.main === module || process.env.PORT) {
+  const port = process.env.PORT || 5000;
+  app.listen(port, () => {
+    console.log(`Sentri Backend server is listening on port ${port}`);
+  });
+}

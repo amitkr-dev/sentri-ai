@@ -1,15 +1,103 @@
 const admin = require("firebase-admin");
 
-let db;
-try {
-  db = admin.firestore();
-} catch (e) {
-  // If not initialized yet, initialize default
-  admin.initializeApp();
-  db = admin.firestore();
+class MockDoc {
+  constructor(collectionName, docId, dataRef) {
+    this.collectionName = collectionName;
+    this.docId = docId;
+    this.dataRef = dataRef;
+  }
+  async get() {
+    const docData = this.dataRef[this.collectionName]?.[this.docId];
+    return {
+      exists: !!docData,
+      data: () => docData
+    };
+  }
+  async set(data) {
+    if (!this.dataRef[this.collectionName]) this.dataRef[this.collectionName] = {};
+    this.dataRef[this.collectionName][this.docId] = data;
+  }
+  async update(updates) {
+    if (!this.dataRef[this.collectionName]) this.dataRef[this.collectionName] = {};
+    const existing = this.dataRef[this.collectionName][this.docId] || {};
+    this.dataRef[this.collectionName][this.docId] = { ...existing, ...updates };
+  }
+  async delete() {
+    if (this.dataRef[this.collectionName]) {
+      delete this.dataRef[this.collectionName][this.docId];
+    }
+  }
 }
 
-// Pre-populates Firestore collections with starting dashboard data if empty
+class MockCollection {
+  constructor(collectionName, dataRef) {
+    this.collectionName = collectionName;
+    this.dataRef = dataRef;
+  }
+  limit() {
+    return this;
+  }
+  doc(docId) {
+    return new MockDoc(this.collectionName, docId, this.dataRef);
+  }
+  async get() {
+    const colData = this.dataRef[this.collectionName] || {};
+    const docs = Object.keys(colData).map(id => {
+      const docData = colData[id];
+      return {
+        id,
+        exists: true,
+        data: () => docData
+      };
+    });
+    return {
+      empty: docs.length === 0,
+      forEach: (callback) => docs.forEach(callback),
+      docs
+    };
+  }
+  async add(data) {
+    const docId = 'auto_' + Math.random().toString(36).substring(2);
+    const docRef = this.doc(docId);
+    await docRef.set({ ...data, id: docId });
+    return docRef;
+  }
+}
+
+class MockDb {
+  constructor() {
+    this.data = {};
+  }
+  collection(name) {
+    return new MockCollection(name, this.data);
+  }
+}
+
+let db;
+let isFirebaseConnected = false;
+
+// Check if Firebase service account credentials or project configs are present
+const hasFirebaseConfig = process.env.FIREBASE_CONFIG || process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.VITE_FIREBASE_PROJECT_ID;
+
+if (hasFirebaseConfig) {
+  try {
+    if (admin.apps.length === 0) {
+      admin.initializeApp();
+    }
+    db = admin.firestore();
+    isFirebaseConnected = true;
+    console.log("[DEBUG] Backend Database: Successfully connected to Google Cloud Firestore.");
+  } catch (e) {
+    console.warn("[WARNING] Failed to initialize Firebase Admin SDK. Falling back to Mock Database:", e.message);
+  }
+}
+
+if (!isFirebaseConnected) {
+  console.log("[DEBUG] Backend Database: No Firebase configuration found. Running with in-memory Mock Database.");
+  db = new MockDb();
+}
+
+// Pre-populates database collections with starting dashboard data if empty
 async function initializeDefaultData() {
   // 1. Tasks pre-population
   const tasksRef = db.collection("tasks");
